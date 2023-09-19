@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-// import { app, database } from "../firebaseConfig";
+import { app, database } from "../firebaseConfig";
 import {
   getAuth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { collection, addDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const signIn = () => {
   const [data, setData] = useState({
@@ -13,9 +13,9 @@ const signIn = () => {
     password: "",
   });
   const [errorMessage, setErrorMessage] = useState(null);
+  const navigate = useNavigate();
 
   const auth = getAuth();
-  // const dbInstance = collection(database, "users");
 
   const handleInputs = (event) => {
     let inputs = { [event.target.name]: event.target.value };
@@ -46,7 +46,11 @@ const signIn = () => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, data.email, data.password)
       .then((response) => {
-        console.log(response.user);
+        navigate("/gallery");
+        sessionStorage.setItem(
+          "Auth token",
+          response._tokenResponse.refreshToken
+        );
       })
       .catch((error) => {
         console.log(error.code);
@@ -56,13 +60,10 @@ const signIn = () => {
           error.code == "auth/invalid-email"
         ) {
           setErrorMessage("Incorrect email or password");
+        } else if (error.code == "auth/network-request-failed") {
+          setErrorMessage("Connect to internet");
         }
       });
-    // addDoc(dbInstance, data)
-    //   .then(() => {
-    //     alert("Data sent");
-    //   })
-    //   .catch((err) => alert(err.message));
   };
 
   return (

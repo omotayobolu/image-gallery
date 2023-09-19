@@ -1,9 +1,9 @@
-import SignIn from "./components/signIn";
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <SignIn />
+    <div>
+      <Outlet />
     </div>
   );
 }
