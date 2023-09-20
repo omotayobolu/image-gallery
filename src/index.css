@@ -9,5 +9,5 @@ label {
 }
 
 input {
-  @apply border border-black rounded-sm py-2 px-4 max-w-full text-lg w-[400px];
+  @apply border border-black rounded-lg py-2 px-4 max-w-full text-lg w-[400px];
 }

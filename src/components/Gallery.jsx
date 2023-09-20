@@ -79,6 +79,7 @@ const Gallery = () => {
 
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const moveImage = useCallback((dragIndex, hoverIndex) => {
     setSearchResults((prevCards) => {
@@ -90,11 +91,27 @@ const Gallery = () => {
   }, []);
 
   useEffect(() => {
+    setTimeout(() => {
+      const fetchedImages = imagesList;
+      setSearchResults(fetchedImages);
+      setLoading(false);
+    }, 3000);
+  }, []);
+
+  useEffect(() => {
     const searchedImages = imagesList.filter((image) =>
       image.tag.toLowerCase().includes(search.toLowerCase())
     );
     setSearchResults(searchedImages.reverse());
   }, [imagesList, search]);
+
+  if (loading) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <p className="text-lg">Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <section>
@@ -109,9 +126,9 @@ const Gallery = () => {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <div className="mt-8 grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1  gap-10">
-          {searchResults.length ? (
-            searchResults.map((image, index) => (
+        {searchResults.length ? (
+          <div className="mt-8 mb-4 grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1  gap-10">
+            {searchResults.map((image, index) => (
               <Card
                 key={image.id}
                 id={image.id}
@@ -119,13 +136,13 @@ const Gallery = () => {
                 index={index}
                 moveImage={moveImage}
               />
-            ))
-          ) : (
-            <div className="flex justify-center items-center">
-              <p className="text-xl">No image found</p>
-            </div>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex justify-center items-center mt-8">
+            <p className="text-xl">No image found</p>
+          </div>
+        )}
       </div>
     </section>
   );

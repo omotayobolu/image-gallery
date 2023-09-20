@@ -13,6 +13,7 @@ const signIn = () => {
     password: "",
   });
   const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
   const navigate = useNavigate();
 
   const auth = getAuth();
@@ -28,6 +29,7 @@ const signIn = () => {
     createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((response) => {
         console.log(response.user);
+        setSuccessMessage("User created, you can now sign in");
       })
       .catch((error) => {
         console.log(error.code);
@@ -51,6 +53,7 @@ const signIn = () => {
           "Auth token",
           response._tokenResponse.refreshToken
         );
+        setSuccessMessage("Sign In Successful!");
       })
       .catch((error) => {
         console.log(error.code);
@@ -62,7 +65,9 @@ const signIn = () => {
         } else if (error.code == "auth/network-request-failed") {
           setErrorMessage("Ensure you're connected to internet");
         } else if (error.code == "auth/invalid-login-credentials") {
-          setErrorMessage("Account does not exist");
+          setErrorMessage(
+            "User does not exist, enter email and password again to confirm"
+          );
         }
       });
   };
@@ -70,7 +75,12 @@ const signIn = () => {
   return (
     <section className="min-h-screen grid place-items-center">
       <form>
-        <p className="text-lg text-red-600 italic">{errorMessage}</p>
+        <p className="text-lg text-red-600 italic font-medium">
+          {errorMessage}
+        </p>
+        <p className="text-lg text-green-500 italic font-medium">
+          {successMessage}
+        </p>
         <div className="flex flex-col gap-2">
           <label htmlFor="email">Email</label>
           <input

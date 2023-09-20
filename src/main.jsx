@@ -25,7 +25,10 @@ const router = createBrowserRouter([
         element: <Navigate to="/auth" replace />,
       },
       { path: "/auth", element: <SignIn /> },
-      { path: "/gallery", element: <Gallery /> },
+      {
+        path: "/gallery",
+        element: <Gallery />,
+      },
     ],
   },
 ]);
