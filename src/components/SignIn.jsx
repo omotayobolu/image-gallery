@@ -55,13 +55,14 @@ const signIn = () => {
       .catch((error) => {
         console.log(error.code);
         if (
-          error.code == "auth/invalid-login-credentials" ||
           error.code == "auth/missing-password" ||
           error.code == "auth/invalid-email"
         ) {
           setErrorMessage("Incorrect email or password");
         } else if (error.code == "auth/network-request-failed") {
-          setErrorMessage("Connect to internet");
+          setErrorMessage("Ensure you're connected to internet");
+        } else if (error.code == "auth/invalid-login-credentials") {
+          setErrorMessage("Account does not exist");
         }
       });
   };

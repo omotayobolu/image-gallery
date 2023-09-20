@@ -7,12 +7,12 @@ const ErrorPage = () => {
 
   return (
     <div className="h-screen flex flex-col justify-center items-center">
-      <h1>Oops!</h1>
-      <p>Page Not Found!</p>
+      <h1 className="text-3xl font-bold">Oops!</h1>
+      <p className="text-lg">Page Not Found!</p>
       <p>
-        <i>{error.statusText || error.message}</i>
+        <i>Error: {error.statusText || error.message}</i>
       </p>
-      <Link to="/marketplace" className="text-lg underline font-medium mt-6">
+      <Link to="/" className="text-lg underline font-medium mt-6">
         Go Back
       </Link>
     </div>
