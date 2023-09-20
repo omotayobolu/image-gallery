@@ -55,8 +55,8 @@ const Card = ({ image, index, id, moveImage }) => {
   drag(drop(ref));
 
   return (
-    <div className="relative" ref={ref} style={{ opacity }}>
-      <img src={image.image} className="w-full" alt="" />
+    <div className="relative md:mx-0 mx-[4%]" ref={ref} style={{ opacity }}>
+      <img src={image.image} className="max-w-full" alt="" />
       <p className="text-lg absolute top-2 right-2 py-2 px-4 rounded-md bg-slate-600 text-white">
         {image.tag}
       </p>
@@ -77,10 +77,11 @@ const Gallery = () => {
     }
   }, []);
 
-  const [images, setImages] = useState(imagesList);
+  const [search, setSearch] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   const moveImage = useCallback((dragIndex, hoverIndex) => {
-    setImages((prevCards) => {
+    setSearchResults((prevCards) => {
       const clonedCards = [...prevCards];
       const removedItem = clonedCards.splice(dragIndex, 1)[0];
       clonedCards.splice(hoverIndex, 0, removedItem);
@@ -88,21 +89,42 @@ const Gallery = () => {
     });
   }, []);
 
+  useEffect(() => {
+    const searchedImages = imagesList.filter((image) =>
+      image.tag.toLowerCase().includes(search.toLowerCase())
+    );
+    setSearchResults(searchedImages.reverse());
+  }, [imagesList, search]);
+
   return (
     <section>
       <div className="md:mx-[8%] my-[3%] mx-[4%] ">
-        <h2>Gallery</h2>
-        <input type="text" />
+        <div className="flex md:flex-row flex-col justify-between gap-4 items-center">
+          <h2 className="text-3xl font-semibold">User's Gallery</h2>
+          <input
+            id="search"
+            type="text"
+            placeholder="Search gallery"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
         <div className="mt-8 grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1  gap-10">
-          {images.map((image, index) => (
-            <Card
-              key={image.id}
-              id={image.id}
-              image={image}
-              index={index}
-              moveImage={moveImage}
-            />
-          ))}
+          {searchResults.length ? (
+            searchResults.map((image, index) => (
+              <Card
+                key={image.id}
+                id={image.id}
+                image={image}
+                index={index}
+                moveImage={moveImage}
+              />
+            ))
+          ) : (
+            <div className="flex justify-center items-center">
+              <p className="text-xl">No image found</p>
+            </div>
+          )}
         </div>
       </div>
     </section>
