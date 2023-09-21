@@ -7,7 +7,7 @@ import {
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
-const signIn = () => {
+const SignIn = () => {
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -120,4 +120,4 @@ const signIn = () => {
   );
 };
 
-export default signIn;
+export default SignIn;

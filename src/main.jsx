@@ -10,7 +10,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 
 import App from "./App";
 import "./index.css";
-import SignIn from "./components/signIn";
+import SignIn from "./components/SignIn";
 import Gallery from "./components/Gallery";
 import ErrorPage from "./ErrorPage";
 

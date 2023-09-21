@@ -2,6 +2,7 @@ import React, { useEffect, useCallback, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import imagesList from "../data/images";
 import { useDrag, useDrop } from "react-dnd";
+import Loading from "./Loading";
 
 const Card = ({ image, index, id, moveImage }) => {
   const ref = useRef(null);
@@ -55,8 +56,12 @@ const Card = ({ image, index, id, moveImage }) => {
   drag(drop(ref));
 
   return (
-    <div className="relative md:mx-0 mx-[4%]" ref={ref} style={{ opacity }}>
-      <img src={image.image} className="max-w-full" alt="" />
+    <div className="relative md:mx-0 mx-[5%]" ref={ref} style={{ opacity }}>
+      <img
+        src={image.image}
+        className="w-full max-w-full h-[230px] rounded-lg"
+        alt=""
+      />
       <p className="text-lg absolute top-2 right-2 py-2 px-4 rounded-md bg-slate-600 text-white">
         {image.tag}
       </p>
@@ -108,7 +113,9 @@ const Gallery = () => {
   if (loading) {
     return (
       <div className="h-screen flex items-center justify-center">
-        <p className="text-lg">Loading...</p>
+        <p className="text-lg">
+          <Loading />
+        </p>
       </div>
     );
   }
