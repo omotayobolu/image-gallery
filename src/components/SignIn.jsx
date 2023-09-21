@@ -65,9 +65,7 @@ const SignIn = () => {
         } else if (error.code == "auth/network-request-failed") {
           setErrorMessage("Ensure you're connected to internet");
         } else if (error.code == "auth/invalid-login-credentials") {
-          setErrorMessage(
-            "User does not exist, enter email and password again to confirm"
-          );
+          setErrorMessage("Account does not exist");
         }
       });
   };
