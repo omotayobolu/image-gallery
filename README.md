@@ -17,7 +17,7 @@ A user should be to login to the gallery page. Authenticated users should be abl
 ## Links
 
 - Github Link : [Github URL](https://github.com/omotayobolu/image-gallery)
-- Live Site : [Live URL]
+- Live Site : [Live URL](https://image-gallery-hngx3.netlify.app/)
 
 ## How To Run Locally
 
