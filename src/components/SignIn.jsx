@@ -59,20 +59,19 @@ const SignIn = () => {
         console.log(error.code);
         if (
           error.code == "auth/missing-password" ||
-          error.code == "auth/invalid-email"
+          error.code == "auth/invalid-email" ||
+          error.code == "auth/invalid-login-credentials"
         ) {
           setErrorMessage("Incorrect email or password");
         } else if (error.code == "auth/network-request-failed") {
           setErrorMessage("Ensure you're connected to internet");
-        } else if (error.code == "auth/invalid-login-credentials") {
-          setErrorMessage("Account does not exist");
         }
       });
   };
 
   return (
-    <section className="min-h-screen grid place-items-center">
-      <form>
+    <section className="min-h-screen md:grid place-items-center">
+      <form className="md:m-0 mt-[30%] mx-[5%]">
         <p className="text-lg text-red-600 italic font-medium">
           {errorMessage}
         </p>
@@ -97,7 +96,7 @@ const SignIn = () => {
             onChange={(event) => handleInputs(event)}
           />
         </div>
-        <div className="flex items-center justify-between mt-8">
+        <div className="flex items-center justify-between mt-8 w-full">
           <button
             className="text-white bg-green-700 hover:bg-green-900 active:bg-green-500 px-6 py-2 text-lg rounded-md"
             type="submit"

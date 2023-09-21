@@ -11,3 +11,11 @@ label {
 input {
   @apply border border-black rounded-lg py-2 px-4 max-w-full text-lg w-[400px];
 }
+
+.card-image {
+  @apply w-full max-w-full h-[230px] rounded-lg cursor-pointer;
+}
+
+.card-image:hover {
+  transform: scale(1.1);
+}

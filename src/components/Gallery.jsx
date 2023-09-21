@@ -57,11 +57,7 @@ const Card = ({ image, index, id, moveImage }) => {
 
   return (
     <div className="relative md:mx-0 mx-[5%]" ref={ref} style={{ opacity }}>
-      <img
-        src={image.image}
-        className="w-full max-w-full h-[230px] rounded-lg"
-        alt=""
-      />
+      <img src={image.image} className="card-image" alt="" />
       <p className="text-lg absolute top-2 right-2 py-2 px-4 rounded-md bg-slate-600 text-white">
         {image.tag}
       </p>
