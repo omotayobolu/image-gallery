@@ -13,6 +13,7 @@ import "./index.css";
 import SignIn from "./components/SignIn";
 import Gallery from "./components/Gallery";
 import ErrorPage from "./ErrorPage";
+import SignUp from "./components/SignUp";
 
 const router = createBrowserRouter([
   {
@@ -22,9 +23,10 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to="/auth" replace />,
+        element: <Navigate to="/signin" replace />,
       },
-      { path: "/auth", element: <SignIn /> },
+      { path: "/signin", element: <SignIn /> },
+      { path: "/signup", element: <SignUp /> },
       {
         path: "/gallery",
         element: <Gallery />,

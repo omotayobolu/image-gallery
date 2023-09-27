@@ -74,7 +74,7 @@ const Gallery = () => {
     }
 
     if (!authToken) {
-      navigate("/auth");
+      navigate("/signin");
     }
   }, []);
 

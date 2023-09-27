@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import { app, database } from "../firebaseConfig";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-} from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const [data, setData] = useState({
@@ -22,26 +18,6 @@ const SignIn = () => {
     let inputs = { [event.target.name]: event.target.value };
 
     setData({ ...data, ...inputs });
-  };
-
-  const handleSignUp = (e) => {
-    e.preventDefault();
-    createUserWithEmailAndPassword(auth, data.email, data.password)
-      .then((response) => {
-        console.log(response.user);
-        setSuccessMessage("User created, you can now sign in");
-      })
-      .catch((error) => {
-        console.log(error.code);
-        if (
-          error.code == "auth/invalid-email" ||
-          error.code == "auth/missing-password"
-        ) {
-          setErrorMessage("Invalid email or password");
-        } else if (error.code == "auth/weak-password") {
-          setErrorMessage("Weak password, set a stronger password");
-        }
-      });
   };
 
   const handleSignIn = (e) => {
@@ -96,14 +72,11 @@ const SignIn = () => {
             onChange={(event) => handleInputs(event)}
           />
         </div>
-        <div className="flex items-center justify-between mt-8 w-full">
-          <button
-            className="text-white bg-green-700 hover:bg-green-900 active:bg-green-500 px-6 py-2 text-lg rounded-md"
-            type="submit"
-            onClick={handleSignUp}
-          >
-            Sign Up
-          </button>
+        <div className="flex items-center justify-between mt-4 w-full">
+          <p className="text-black hover:text-green-900 text-lg border-b border-black cursor-pointer">
+            <Link to="/signup">Sign Up</Link>
+          </p>
+
           <button
             className="text-white bg-green-700 hover:bg-green-900 active:bg-green-500 px-6 py-2 text-lg rounded-md"
             type="submit"
