@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { app, database } from "../firebaseConfig";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SignIn = () => {
   const [data, setData] = useState({
     email: "",
     password: "",
   });
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
   const navigate = useNavigate();
 
   const auth = getAuth();
@@ -22,6 +22,9 @@ const SignIn = () => {
 
   const handleSignIn = (e) => {
     e.preventDefault();
+    toast.info("Loading...", {
+      position: toast.POSITION.TOP_CENTER,
+    });
     signInWithEmailAndPassword(auth, data.email, data.password)
       .then((response) => {
         navigate("/gallery");
@@ -29,7 +32,9 @@ const SignIn = () => {
           "Auth token",
           response._tokenResponse.refreshToken
         );
-        setSuccessMessage("Sign In Successful!");
+        toast.success("Sign in succesful!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
       })
       .catch((error) => {
         console.log(error.code);
@@ -38,22 +43,21 @@ const SignIn = () => {
           error.code == "auth/invalid-email" ||
           error.code == "auth/invalid-login-credentials"
         ) {
-          setErrorMessage("Incorrect email or password");
+          toast.error("Incorrect email or password!", {
+            position: toast.POSITION.TOP_CENTER,
+          });
         } else if (error.code == "auth/network-request-failed") {
-          setErrorMessage("Ensure you're connected to internet");
+          toast.error("Check your internet connection!", {
+            position: toast.POSITION.TOP_CENTER,
+          });
         }
       });
   };
 
   return (
     <section className="min-h-screen md:grid place-items-center">
+      <ToastContainer />
       <form className="md:m-0 mt-[30%] mx-[5%]">
-        <p className="text-lg text-red-600 italic font-medium">
-          {errorMessage}
-        </p>
-        <p className="text-lg text-green-500 italic font-medium">
-          {successMessage}
-        </p>
         <div className="flex flex-col gap-2">
           <label htmlFor="email">Email</label>
           <input

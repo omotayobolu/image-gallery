@@ -2,6 +2,10 @@ import React, { useEffect, useCallback, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import imagesList from "../data/images";
 import { useDrag, useDrop } from "react-dnd";
+import { signOut } from "firebase/auth";
+import { getAuth } from "firebase/auth";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Loading from "./Loading";
 
 const Card = ({ image, index, id, moveImage }) => {
@@ -66,6 +70,7 @@ const Card = ({ image, index, id, moveImage }) => {
 };
 
 const Gallery = () => {
+  const auth = getAuth();
   const navigate = useNavigate();
   useEffect(() => {
     const authToken = sessionStorage.getItem("Auth token");
@@ -77,6 +82,19 @@ const Gallery = () => {
       navigate("/signin");
     }
   }, []);
+
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        sessionStorage.clear();
+        navigate("/");
+      })
+      .catch((error) => {
+        toast.error(error.message, {
+          position: toast.POSITION.TOP_LEFT,
+        });
+      });
+  };
 
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -119,7 +137,14 @@ const Gallery = () => {
   return (
     <section>
       <div className="md:mx-[8%] my-[3%] mx-[4%] ">
+        <ToastContainer />
         <div className="flex md:flex-row flex-col justify-between gap-4 items-center">
+          <button
+            onClick={handleSignOut}
+            className="text-white bg-red-700 hover:bg-red-900 active:bg-red-500 px-6 py-2 text-lg rounded-md"
+          >
+            Sign Out
+          </button>
           <h2 className="text-3xl font-semibold">User's Gallery</h2>
           <input
             id="search"
