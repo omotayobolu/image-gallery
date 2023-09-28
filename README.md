@@ -35,3 +35,4 @@ A user should be to login to the gallery page. Authenticated users should be abl
 - Firebase (for authentication)
 - React-dnd (for drag and drop)
 - React-dnd-html5-backend
+- React-toastify (for notifications) 
